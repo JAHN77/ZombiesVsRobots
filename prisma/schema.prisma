@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+
+model Character {
+  id      String @id @default(cuid())
+  name    String
+  type    String
+  health     Int
+  attack     Int
+  defense    Int
+  speed      Int
+  level      Int @default(1)
+  experience Int @default(0)
+  statPoints Int @default(0)
+
+  battlesAsCharacter1 Battle[] @relation("Character1")
+  battlesAsCharacter2 Battle[] @relation("Character2")
+  battlesAsWinner     Battle[] @relation("Winner")
+}
+
+model Battle {
+  id           String @id @default(cuid())
+  character1Id String
+  character2Id String
+  winnerId     String
+  turns        Int
+
+  character1 Character @relation("Character1", fields: [character1Id], references: [id])
+  character2 Character @relation("Character2", fields: [character2Id], references: [id])
+  winner     Character @relation("Winner", fields: [winnerId], references: [id])
+}
