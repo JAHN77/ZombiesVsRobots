@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧟 Zombies vs Robots - Simulador de Batallas 🤖
 
-## Getting Started
+Bienvenido a **Zombies vs Robots**, una aplicación web interactiva que te permite simular épicas batallas entre hordas de zombis y ejércitos de robots. Este proyecto está construido con una arquitectura moderna utilizando Next.js, React, Tailwind CSS y Prisma ORM con PostgreSQL.
 
-First, run the development server:
+## 🚀 Características y Funcionalidades del Proyecto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+El proyecto está diseñado como un juego de simulación y gestión con elementos de progresión RPG. Entre sus principales funcionalidades destacamos:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Gestión de Personajes (Zombis y Robots)
+- **Creación de Personajes:** Permite crear nuevos combatientes (ya sean Zombis o Robots) con diferentes estadísticas base:
+  - Vida (Health)
+  - Ataque (Attack)
+  - Defensa (Defense)
+  - Velocidad (Speed)
+- **Sistema de Progresión:** Los personajes pueden ganar experiencia (XP) y subir de nivel.
+- **Distribución de Puntos:** Al subir de nivel, los personajes adquieren puntos de estadísticas (Stat Points) que el usuario puede redistribuir de manera manual en la interfaz para potenciar y personalizar sus personajes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Simulador de Batallas Dinámico
+- Motor de combate que enfrenta a dos personajes en una batalla de turnos automáticos.
+- Se tienen en cuenta las estadísticas avanzadas: ataque vs defensa, velocidad para definir los turnos de ataque, y cálculo de daño restado sobre la vida.
+- Al final de la batalla, **el ganador obtiene puntos de experiencia (XP)** que le ayudarán en su progresión a niveles superiores.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Historial de Combates
+- Todas las batallas se quedan registradas dentro de la base de datos.
+- Puedes navegar por el historial para consultar exactamente cuántos turnos duró el enfrentamiento y quién fue el personaje victorioso.
 
-## Learn More
+## 💻 Stack Tecnológico
 
-To learn more about Next.js, take a look at the following resources:
+Este proyecto utiliza tecnologías de vanguardia para asegurar un rendimiento y escalabilidad excelentes:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router & Server Actions)
+- **Librería de UI:** [React 19](https://react.dev/)
+- **Estilos:** [Tailwind CSS 4](https://tailwindcss.com/)
+- **Base de Datos:** [PostgreSQL](https://www.postgresql.org/)
+- **ORM:** [Prisma](https://www.prisma.io/) (Tipado seguro y gestión de base de datos)
+- **Lenguaje:** [TypeScript](https://www.typescriptlang.org/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🗄️ Estructura de la Base de Datos
 
-## Deploy on Vercel
+Cuenta con un esquema relacional optimizado manejado por Prisma:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **`Character` (Personaje):** Guarda id, nombre, tipo (Zombi/Robot), vida, ataque, defensa, velocidad, nivel, experiencia, y puntos para distribuir.
+- **`Battle` (Batalla):** Lleva el seguimiento de un enfrentamiento registrando el combatiente 1, el combatiente 2, quién fue el ganador (relacionado con la tabla de `Character`) y cuántos turnos tomó la definición de la pelea.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ⚙️ Instrucciones de Instalación
+
+Sigue estos pasos para correr el proyecto de manera local en tu máquina:
+
+1. **Clona el repositorio**
+   ```bash
+   git clone https://github.com/JAHN77/ZombiesVsRobots.git
+   cd ZombiesVsRobots/my-app
+   ```
+
+2. **Instala las dependencias**
+   ```bash
+   npm install
+   # o yarn install
+   # o pnpm install
+   ```
+
+3. **Configura las variables de entorno**
+   Crea o renombra el archivo `.env` en la raíz del proyecto y conecta tu base de datos de PostgreSQL:
+   ```env
+   DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/zombies_vs_robots"
+   ```
+
+4. **Corre las migraciones de Prisma**
+   Esto creará las tablas necesarias en la base de datos:
+   ```bash
+   npx prisma generate
+   npx prisma migrate dev --name init
+   ```
+
+5. **Inicia el servidor de desarrollo**
+   ```bash
+   npm run dev
+   ```
+
+6. **¡A jugar!**
+   Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación local.
+
+---
+
+*Crea, entrena y pon a prueba a tus personajes para descubrir qué facción dominará este mundo apocalíptico.*
