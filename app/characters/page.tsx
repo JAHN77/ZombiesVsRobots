@@ -1,5 +1,6 @@
 import CharacterForm from "../components/CharacterForm";
 import { getCharacters, upgradeCharacterStat } from "../actions/characters";
+import type { Character } from "@prisma/client";
 
 export default async function CharactersPage({
   searchParams,
@@ -30,7 +31,7 @@ export default async function CharactersPage({
           {characters.length === 0 && (
             <p className="text-slate-500 italic p-4">No hay personajes registrados en esta categoría.</p>
           )}
-          {characters.map(char => (
+          {characters.map((char: Character) => (
             <div key={char.id} className={`p-4 rounded-xl border border-white/5 relative overflow-hidden group ${char.statPoints > 0 ? (char.type === 'Zombie' ? 'bg-lime-900/40 border-lime-500/50 shadow-[0_0_15px_rgba(132,204,22,0.2)]' : 'bg-cyan-900/40 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]') : 'bg-slate-900/40'}`}>
               <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-full -z-10 transition-transform group-hover:scale-150 ${char.type === 'Zombie' ? 'bg-lime-500/10' : 'bg-cyan-500/10'}`}></div>
               

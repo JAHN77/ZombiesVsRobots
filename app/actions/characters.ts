@@ -67,7 +67,7 @@ export async function deleteCharacter(id: string) {
 export async function upgradeCharacterStat(id: string, statName: "health" | "attack" | "defense" | "speed") {
   try {
     const char = await prisma.character.findUnique({ where: { id }});
-    if (!char || char.statPoints <= 0) return { error: "Puntos insuficientes." };
+    if (!char || char.statPoints <= 0) return;
 
     const increment = statName === "health" ? 10 : 1; // +10 HP or +1 rest
     
@@ -81,11 +81,8 @@ export async function upgradeCharacterStat(id: string, statName: "health" | "att
 
     revalidatePath("/characters");
     revalidatePath("/simulator");
-
-    return { success: true };
   } catch(error) {
     console.error("Error upgrading stat:", error);
-    return { error: "Fallo al mejorar parámetro." };
   }
 }
 
